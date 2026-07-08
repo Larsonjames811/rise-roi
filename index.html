@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where AI pays off for Rise · Certified AI Partners</title>
+<style>
+  :root{
+    --paper:#FFFFFF; --ink:#1B2231; --soft:#4E5A78; --muted:#8791A8;
+    --line:#E6E9F0; --line-2:#D4DAE6; --box:#FFFFFF;
+    --navy:#47638F; --navy-ink:#375080; --navy-wash:#EEF2F8;
+    --orange:#E4884A; --orange-ink:#C0692C; --orange-wash:#FCF0E5;
+    --good:#3E8E6E; --warn:#C58432;
+    --font-head:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --font-sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --font-mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--paper); color:var(--ink); font-family:var(--font-sans); line-height:1.5;
+    -webkit-font-smoothing:antialiased; padding:clamp(24px,5vw,56px) 22px 64px}
+  .wrap{max-width:640px; margin:0 auto; display:flex; flex-direction:column; gap:40px}
+
+  .eyebrow{font-size:11.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--navy); font-weight:700; margin:0}
+  h1{font-family:var(--font-head); font-weight:750; font-size:clamp(27px,4.8vw,36px); line-height:1.12;
+    letter-spacing:-.015em; margin:9px 0 0; text-wrap:balance}
+  .sub{color:var(--soft); font-size:15px; margin:9px 0 0}
+  .sub b{color:var(--ink); font-weight:650}
+
+  h2{font-size:12px; letter-spacing:.13em; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 0 2px}
+  section{display:flex; flex-direction:column; gap:14px}
+
+  .ops{display:flex; flex-direction:column}
+  .op{display:flex; align-items:baseline; gap:14px; padding:15px 0; border-top:1px solid var(--line)}
+  .op:last-child{border-bottom:1px solid var(--line)}
+  .op .n{font-family:var(--font-head); font-weight:750; font-size:18px; color:var(--navy); width:16px; flex:none; line-height:1;
+    font-variant-numeric:tabular-nums}
+  .op .txt{flex:1; min-width:0}
+  .op .t{font-weight:650; font-size:16px}
+  .op .d{color:var(--soft); font-size:14px; margin-top:2px}
+  .op .roi{flex:none; text-align:right; font-family:var(--font-mono); font-size:13px; font-weight:600;
+    color:var(--orange-ink); background:var(--orange-wash); padding:4px 9px; border-radius:7px; white-space:nowrap}
+  @media (max-width:520px){
+    .op{flex-wrap:wrap}
+    .op .roi{width:100%; text-align:left; margin-top:8px; margin-left:30px}
+  }
+
+  .calc{border:1px solid var(--line-2); border-radius:14px; background:var(--box); overflow:hidden}
+  .out{display:grid; grid-template-columns:1fr 1fr}
+  .out .cell{padding:22px; text-align:center}
+  .out .cell:first-child{background:var(--navy-wash)}
+  .out .cell:last-child{background:var(--orange-wash)}
+  .out .big{font-family:var(--font-head); font-weight:750; color:var(--ink);
+    font-size:clamp(32px,7vw,46px); line-height:1; font-variant-numeric:lining-nums tabular-nums; letter-spacing:-.02em}
+  .out .big .u{font-size:.44em; font-weight:700; margin-left:3px; letter-spacing:0}
+  .out .cell:first-child .u{color:var(--navy)}
+  .out .cur{color:var(--orange-ink); font-size:.62em; vertical-align:top; margin-right:1px}
+  .out .cap{font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:650; margin-top:8px}
+  .breakdown{padding:11px 22px; text-align:center; font-size:12.5px; color:var(--soft); background:var(--box);
+    border-top:1px solid var(--line)}
+  .breakdown b{color:var(--navy-ink); font-weight:650}
+
+  .ctrls{padding:22px; display:flex; flex-direction:column; gap:16px; border-top:1px solid var(--line)}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  @media (max-width:480px){.grid{grid-template-columns:1fr}}
+  .f{display:flex; flex-direction:column; gap:6px}
+  .f label{font-size:12.5px; font-weight:600; color:var(--ink)}
+  .f .hint{font-size:11px; color:var(--muted); margin:0}
+  .inp{display:flex; align-items:center; gap:2px; background:var(--paper); border:1px solid var(--line-2);
+    border-radius:9px; padding:9px 12px}
+  .inp span{font-family:var(--font-mono); color:var(--muted); font-size:14px}
+  .inp input{border:none; background:transparent; color:var(--ink); font-family:var(--font-mono);
+    font-size:16px; font-weight:600; width:100%; min-width:0; outline:none; font-variant-numeric:tabular-nums}
+  .inp:focus-within{border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-wash)}
+  .go{margin-top:2px; border:none; background:var(--navy); color:#fff; font-family:var(--font-head);
+    font-size:15px; font-weight:700; padding:13px 18px; border-radius:10px; cursor:pointer;
+    transition:background .15s ease, transform .1s ease}
+  .go:hover{background:var(--navy-ink)}
+  .go:active{transform:translateY(1px)}
+  .go:focus-visible{outline:3px solid var(--navy-wash); outline-offset:2px}
+  .fine{font-size:11.5px; color:var(--muted); margin:0; font-style:italic; text-align:center}
+  .flash{animation:flash .5s ease}
+  @keyframes flash{0%{color:var(--orange-ink)}100%{color:var(--ink)}}
+
+  .why{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+  @media (max-width:520px){.why{grid-template-columns:1fr; gap:16px}}
+  .why h3{font-size:13px; margin:0 0 8px; font-weight:700}
+  .why ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:7px}
+  .why li{font-size:13.5px; color:var(--soft); line-height:1.4; padding-left:16px; position:relative}
+  .why li::before{content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:var(--navy)}
+  .why .fix li::before{background:var(--orange); border-radius:1px}
+
+  footer{border-top:3px solid var(--navy); padding-top:16px; display:flex; flex-direction:column; gap:6px}
+  footer .ask{font-size:15px; color:var(--ink)}
+  footer .ask b{color:var(--orange-ink)}
+  footer .sig{font-size:12px; color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <p class="eyebrow">Prepared for Rise · by Certified AI Partners</p>
+      <h1>Where AI pays off for Rise</h1>
+      <p class="sub">You both asked for the same thing back: <b>time</b>. Here's where to get it — measured in billable hours and dollars.</p>
+    </header>
+
+    <section>
+      <h2>Top opportunities</h2>
+      <div class="ops">
+        <div class="op">
+          <div class="n">1</div>
+          <div class="txt"><div class="t">Document chaser</div><div class="d">Auto-verifies every upload, auto-drafts the next nudge. No more wrong-doc surprises weeks later.</div></div>
+          <div class="roi">~$2K / season</div>
+        </div>
+        <div class="op">
+          <div class="n">2</div>
+          <div class="txt"><div class="t">Onboarding intake</div><div class="d">Builds each new client's document checklist automatically from last year's return.</div></div>
+          <div class="roi">~$7K / season</div>
+        </div>
+        <div class="op">
+          <div class="n">3</div>
+          <div class="txt"><div class="t">Inbox assistant</div><div class="d">Reads, labels, and drafts email replies in your voice — you just review and send.</div></div>
+          <div class="roi">hours back weekly</div>
+        </div>
+        <div class="op">
+          <div class="n">4</div>
+          <div class="txt"><div class="t">QuickBooks copilot</div><div class="d">AI categorizes transactions, flags odd entries, and drafts month-end summaries — the monthly close from hours to minutes.</div></div>
+          <div class="roi">faster monthly close</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The math on your hours, Weldon</h2>
+      <div class="calc">
+        <div class="out">
+          <div class="cell"><div class="big" id="hrs-out">79<span class="u">hrs</span></div><div class="cap">Billable hours back / year</div></div>
+          <div class="cell"><div class="big" id="dol-out"><span class="cur">$</span>13,825</div><div class="cap">Value back / year</div></div>
+        </div>
+        <div class="breakdown" id="brk"><b>39 hrs</b> in tax season + <b>40 hrs</b> the rest of the year</div>
+        <div class="ctrls">
+          <div class="grid">
+            <div class="f">
+              <label for="season">Hours / week — tax season</label>
+              <div class="inp"><input type="number" id="season" min="0" max="60" step="0.5" value="6.5"><span>hrs</span></div>
+              <p class="hint">Onboarding + chasing docs</p>
+            </div>
+            <div class="f">
+              <label for="off">Hours / week — off season</label>
+              <div class="inp"><input type="number" id="off" min="0" max="60" step="0.5" value="2"><span>hrs</span></div>
+              <p class="hint">Same tasks, lighter volume</p>
+            </div>
+            <div class="f">
+              <label for="auto">AI handles about</label>
+              <div class="inp"><input type="number" id="auto" min="0" max="100" step="5" value="50"><span>%</span></div>
+              <p class="hint">The rest stays your review</p>
+            </div>
+            <div class="f">
+              <label for="rate">Your billable rate</label>
+              <div class="inp"><span>$</span><input type="number" id="rate" min="0" max="800" step="5" value="175"><span>/hr</span></div>
+              <p class="hint">What an hour is worth</p>
+            </div>
+          </div>
+          <button class="go" id="go">Calculate time &amp; money back</button>
+          <p class="fine">Assumes ~12 weeks of tax season and ~40 weeks outside it. An estimate to talk from — we prove the real number in a 2-week pilot.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Why onboarding eats 5 hours a week</h2>
+      <div class="why">
+        <div>
+          <h3>The slow part</h3>
+          <ul>
+            <li>Every new client is different — nobody knows what to ask for up front</li>
+            <li>Someone pulls last year's return and reads every form by hand</li>
+            <li>Then asks about life changes that add new documents</li>
+            <li>That list lives in your head, so it can't be handed off</li>
+          </ul>
+        </div>
+        <div>
+          <h3>How we automate it</h3>
+          <ul class="fix">
+            <li>Client uploads last year's return — AI reads it in seconds</li>
+            <li>It pulls every recurring document automatically</li>
+            <li>A short questionnaire catches the life changes</li>
+            <li>You get a finished checklist to approve, not build</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it connects to your stack</h2>
+      <div class="why" style="grid-template-columns:1fr">
+        <div>
+          <ul>
+            <li><b style="color:var(--ink)">QuickBooks</b> — full API. AI reads your P&amp;L, categorizes transactions, drafts month-end summaries.</li>
+            <li><b style="color:var(--ink)">TaxDome</b> — no open API. New clients flow in automatically; documents run through our system.</li>
+            <li><b style="color:var(--ink)">ProConnect</b> — no API. Reached through QuickBooks. We won't promise what can't be built.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="ask"><b>Next step:</b> a free 2-week pilot of the document chaser on 5 of last season's messiest clients — wired to how Rise actually works.</p>
+      <p class="sig">Certified AI Partners · your outsourced Chief AI Officer · james@certifiedaipartners.com</p>
+    </footer>
+
+  </div>
+
+<script>
+  (function(){
+    var SEASON_WEEKS=12, OFF_WEEKS=40;
+    var season=document.getElementById('season'), off=document.getElementById('off'),
+        auto=document.getElementById('auto'), rate=document.getElementById('rate'), go=document.getElementById('go');
+    var hrsOut=document.getElementById('hrs-out'), dolOut=document.getElementById('dol-out'), brk=document.getElementById('brk');
+    var usd=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
+    function num(el,f){var n=parseFloat(el.value); return isNaN(n)||n<0?f:n;}
+    function round1(n){return Math.round(n*10)/10;}
+    function calc(animate){
+      var s=num(season,6.5), o=num(off,2), p=Math.min(num(auto,50),100)/100, r=num(rate,175);
+      var seasonBack=s*SEASON_WEEKS*p, offBack=o*OFF_WEEKS*p;
+      var hoursBack=seasonBack+offBack, dollars=hoursBack*r;
+      hrsOut.innerHTML=usd.format(Math.round(hoursBack))+'<span class="u">hrs</span>';
+      dolOut.innerHTML='<span class="cur">$</span>'+usd.format(Math.round(dollars));
+      brk.innerHTML='<b>'+usd.format(Math.round(seasonBack))+' hrs</b> in tax season + <b>'+usd.format(Math.round(offBack))+' hrs</b> the rest of the year';
+      if(animate){[hrsOut,dolOut].forEach(function(el){el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');});}
+    }
+    go.addEventListener('click',function(){calc(true);});
+    [season,off,auto,rate].forEach(function(el){
+      el.addEventListener('keydown',function(e){if(e.key==='Enter')calc(true);});
+    });
+    calc(false);
+  })();
+</script>
+</body>
+</html>
