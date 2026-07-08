@@ -27,7 +27,9 @@
   .sub{color:var(--soft); font-size:15px; margin:9px 0 0}
   .sub b{color:var(--ink); font-weight:650}
 
-  h2{font-size:12px; letter-spacing:.13em; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 0 2px}
+  h2{font-family:var(--font-head); font-size:clamp(18px,2.8vw,22px); font-weight:750; color:var(--ink);
+    letter-spacing:-.012em; margin:0; line-height:1.2; text-wrap:balance}
+  h2::after{content:""; display:block; width:32px; height:3px; background:var(--orange); border-radius:2px; margin-top:9px}
   section{display:flex; flex-direction:column; gap:14px}
 
   .ops{display:flex; flex-direction:column}
@@ -90,10 +92,18 @@
   .why li::before{content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:var(--navy)}
   .why .fix li::before{background:var(--orange); border-radius:1px}
 
-  footer{border-top:3px solid var(--navy); padding-top:16px; display:flex; flex-direction:column; gap:6px}
-  footer .ask{font-size:15px; color:var(--ink)}
-  footer .ask b{color:var(--orange-ink)}
-  footer .sig{font-size:12px; color:var(--muted)}
+  .offer{border:2px solid var(--navy); border-radius:14px; padding:22px; display:flex; flex-direction:column; gap:14px; background:var(--box)}
+  .offer-lead{margin:0; font-size:15.5px; color:var(--ink); line-height:1.5}
+  .offer-lead b{color:var(--navy-ink)}
+  .offer-get{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px}
+  .offer-get li{font-size:14px; color:var(--soft); line-height:1.45; padding-left:24px; position:relative}
+  .offer-get li::before{content:"\2713"; position:absolute; left:0; top:0; color:var(--orange-ink); font-weight:800}
+  .offer-guarantee{margin:0; font-size:14.5px; color:var(--ink); background:var(--orange-wash); padding:14px 16px; border-radius:10px; line-height:1.5}
+  .offer-guarantee b{color:var(--orange-ink)}
+  .offer-ask{margin:0; font-size:14.5px; color:var(--soft); line-height:1.5}
+  .offer-ask b{color:var(--ink)}
+  .offer-note{margin:0; font-size:12.5px; color:var(--muted); font-style:italic}
+  .sig{font-size:12px; color:var(--muted); margin:4px 0 0}
   @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
 </style>
 </head>
@@ -213,21 +223,21 @@
     </section>
 
     <section>
-      <h2>The rest of your stack</h2>
-      <div class="why" style="grid-template-columns:1fr">
-        <div>
-          <ul>
-            <li><b style="color:var(--ink)">TaxDome</b> — no open API. New clients flow in automatically; documents run through our system.</li>
-            <li><b style="color:var(--ink)">ProConnect</b> — no API. Reached through QuickBooks. We won't promise what can't be built.</li>
-          </ul>
-        </div>
+      <h2>Our offer to Rise</h2>
+      <div class="offer">
+        <p class="offer-lead"><b>The Busy-Season Head Start.</b> We build Rise a working document chaser — wired to how you actually work — and prove it on 5 of last season's messiest clients. Live in 2 weeks, before January.</p>
+        <ul class="offer-get">
+          <li>Built around your real process — not one more tool your team has to learn</li>
+          <li>Onboarding checklist generator — reads last year's return, builds each client's document list</li>
+          <li>We connect Claude to your QuickBooks and stand up your first close-packet workflow</li>
+          <li>Every AI step is draft-and-approve — Weldon always hits send, and your client data never leaves your control</li>
+        </ul>
+        <p class="offer-guarantee"><b>Our guarantee:</b> if it doesn't save Weldon the hours we projected, we keep building free until it does. The pilot costs you nothing.</p>
+        <p class="offer-ask"><b>All we ask in return:</b> your honest feedback — and if it delivers, an introduction to a couple of firms like yours.</p>
+        <p class="offer-note">We only take on a few pilots before busy season — we'd like Rise to be one.</p>
       </div>
-    </section>
-
-    <footer>
-      <p class="ask"><b>Next step:</b> a free 2-week pilot of the document chaser on 5 of last season's messiest clients — wired to how Rise actually works.</p>
       <p class="sig">Certified AI Partners · your outsourced Chief AI Officer · james@certifiedaipartners.com</p>
-    </footer>
+    </section>
 
   </div>
 
